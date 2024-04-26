@@ -141,7 +141,6 @@ const Priorities = () => {
                     }}
                     validationSchema={PrioritySchema}
                     onSubmit={async (values, helpers) => {
-                      console.log("values", values);
                       try {
                         await priorityCreateMutation.mutateAsync(values);
                         await refetchPriorities();

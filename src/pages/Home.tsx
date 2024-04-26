@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Priority } from "@prisma/client";
+import { type Priority } from "@prisma/client";
 import { Field, Form, Formik } from "formik";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdOutlineWarningAmber } from "react-icons/md";
@@ -24,10 +24,6 @@ export default function Home() {
   });
   const priorityCreateMutation = api.priority.create.useMutation();
   const priorityDeleteMutation = api.priority.delete.useMutation();
-
-  useEffect(() => {
-    console.log("tasks", tasks);
-  }, [tasks]);
 
   const PrioritySchema = Yup.object().shape({
     name: Yup.string().required().max(512, "Name is too long"),
@@ -167,7 +163,6 @@ export default function Home() {
               }}
               validationSchema={PrioritySchema}
               onSubmit={async (values) => {
-                console.log("values", values);
                 try {
                   await priorityCreateMutation.mutateAsync(values);
                   await refetchPriorities();

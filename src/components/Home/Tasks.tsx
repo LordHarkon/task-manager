@@ -155,7 +155,6 @@ const Tasks = () => {
                     }}
                     validationSchema={TaskSchema}
                     onSubmit={async (values, helpers) => {
-                      console.log("values", values);
                       try {
                         await taskCreateMutation.mutateAsync(values);
                         await refetchTasks();
