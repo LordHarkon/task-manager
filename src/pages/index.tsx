@@ -11,7 +11,10 @@ export default function Home() {
     <div className="min-h-screen w-full bg-zinc-950 text-gray-100">
       <Head>
         <title>Task Manager</title>
-        <meta name="description" content="Task Manager is an application to manage your tasks." />
+        <meta
+          name="description"
+          content="Task Manager is an application designed to assist you in managing your tasks."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
@@ -37,7 +40,7 @@ export default function Home() {
             Task Manager
           </span>
         </h1>
-        <p className="text-center text-lg">This is an application made to help you manage your tasks.</p>
+        <p className="text-center text-lg">This is an application designed to assist you in managing your tasks.</p>
         <Tasks />
         <Priorities />
       </div>
