@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import snowflake from "~/utils/snowflake";
 
 export const taskRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -29,6 +30,7 @@ export const taskRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return ctx.db.task.create({
         data: {
+          id: snowflake.getUniqueID().toString(),
           name: input.name,
           description: input.description,
           completed: input.completed,

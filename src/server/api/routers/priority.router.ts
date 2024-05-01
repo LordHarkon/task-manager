@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import snowflake from "~/utils/snowflake";
 
 export const priorityRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -35,11 +36,12 @@ export const priorityRouter = createTRPCRouter({
       if (existingPriority) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Priority with the same value already exists",
+          message: "Priority with the same value already exists.",
         });
       } else {
         return ctx.db.priority.create({
           data: {
+            id: snowflake.getUniqueID().toString(),
             name: input.name,
             value: input.value,
             createdBy: {
@@ -61,7 +63,7 @@ export const priorityRouter = createTRPCRouter({
     if (tasks.length > 0) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "This priority is used for one or more tasks",
+        message: "This priority is used for one or more tasks.",
       });
     } else {
       return ctx.db.priority.delete({
