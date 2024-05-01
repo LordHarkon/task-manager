@@ -1,5 +1,8 @@
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
+import { BiLoaderAlt } from "react-icons/bi";
+import { FaDiscord } from "react-icons/fa";
 import { IoInfinite } from "react-icons/io5";
 import { MdOutlineWarningAmber } from "react-icons/md";
 import Priorities from "~/components/Home/Priorities";
@@ -7,6 +10,8 @@ import Tasks from "~/components/Home/Tasks";
 import Navbar from "~/components/Navbar";
 
 export default function Home() {
+  const { status: loginStatus } = useSession();
+
   return (
     <div className="min-h-screen w-full bg-zinc-950 text-gray-100">
       <Head>
@@ -41,8 +46,29 @@ export default function Home() {
           </span>
         </h1>
         <p className="text-center text-lg">This is an application designed to assist you in managing your tasks.</p>
-        <Tasks />
-        <Priorities />
+        {loginStatus === "authenticated" && (
+          <>
+            <Tasks />
+            <Priorities />
+          </>
+        )}
+        {loginStatus === "loading" && (
+          <div className="flex flex-col items-center justify-center space-y-2 p-6">
+            <BiLoaderAlt size={48} className="animate-spin" />
+            <span className="text-2xl">Loading...</span>
+          </div>
+        )}
+        {loginStatus === "unauthenticated" && (
+          <div className="flex flex-col items-center justify-center p-6">
+            <button
+              className="flex items-center space-x-2 rounded-md border border-white/10 bg-zinc-800 px-4 py-2 text-white"
+              onClick={() => void signIn("discord")}
+            >
+              <FaDiscord size={24} />
+              <span>Login with Discord</span>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

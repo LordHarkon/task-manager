@@ -87,7 +87,9 @@ const Priorities = () => {
                           await refetchPriorities();
                           closeDeleteModal();
                         } catch (error) {
-                          toast.error(priorityDeleteMutation?.error?.shape?.message ?? "An error occurred");
+                          toast.error(
+                            priorityDeleteMutation?.error?.shape?.message ?? "An error occurred. Please try again.",
+                          );
                           closeDeleteModal();
                         }
                       }}

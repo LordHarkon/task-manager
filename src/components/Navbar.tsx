@@ -25,7 +25,7 @@ function Navbar() {
           hidden: !!sessionData,
         })}
       >
-        <span className="cursor-pointer" onClick={() => void signIn()}>
+        <span className="cursor-pointer" onClick={() => void signIn("discord")}>
           Login
         </span>
       </div>
